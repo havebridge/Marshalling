@@ -6,12 +6,15 @@ int main(int argc, char** argv)
 	(void)argc;
 	(void)argv;
 
-
 #if 1
 	assert(Core::Util::isLittleEndian());
 
 	TestFrame::testPrimitive();
+	TestFrame::testArray();
+	TestFrame::testString();
 
+
+	TestFrame::testObject();
 #endif
 	
 

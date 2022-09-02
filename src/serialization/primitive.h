@@ -15,7 +15,7 @@ namespace ObjectModel
 
 	public:
 		template<typename T>
-		static Primitive* Create(std::string name, Type type, T value);
+		static Primitive* createPrimitive(std::string name, Type type, T value);
 
 		virtual void pack(std::vector<uint8_t>& buffer, uint8_t& iterator) override;
 	};
@@ -23,7 +23,7 @@ namespace ObjectModel
 
 	//definition
 	template<typename T>
-	static Primitive* Primitive::Create(std::string name, Type type, T value)
+	static Primitive* Primitive::createPrimitive(std::string name, Type type, T value)
 	{
 		Primitive* p = new Primitive();
 		p->setName(name);
@@ -31,7 +31,7 @@ namespace ObjectModel
 		p->type = static_cast<uint8_t>(type);
 		p->data = new std::vector<uint8_t>(sizeof value);
 
-		p->size += p->data->size();
+		p->size += static_cast<uint8_t>(p->data->size());
 
 		uint8_t iterator = 0;
 		Core::template encode<T>(*p->data, iterator, value);

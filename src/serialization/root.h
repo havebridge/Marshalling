@@ -28,7 +28,7 @@ namespace ObjectModel
 		void setName(std::string name)
 		{
 			this->name = name;
-			nameLength += name.size();
+			nameLength += static_cast<uint8_t>(name.size());
 			this->size += nameLength;
 		}
 
