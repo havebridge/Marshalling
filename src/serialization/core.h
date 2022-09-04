@@ -8,6 +8,8 @@
 
 #include <vector>
 
+#include <cassert>
+
 #include "data.h"	
 #include "root.h"
 
@@ -33,14 +35,14 @@ namespace Core
 	inline void encode<float>(std::vector<uint8_t>& buffer, uint8_t& iterator, float value)
 	{
 		uint32_t toEncode = *reinterpret_cast<uint32_t*>(&value);
-		encode(buffer, iterator, toEncode);
+		encode<>(buffer, iterator, toEncode);
 	}
 
 	template<>
 	inline void encode<double>(std::vector<uint8_t>& buffer, uint8_t& iterator, double value)
 	{
 		uint64_t toEncode = *reinterpret_cast<uint64_t*>(&value);
-		encode(buffer, iterator, toEncode);
+		encode<>(buffer, iterator, toEncode);
 	}
 
 	template<>

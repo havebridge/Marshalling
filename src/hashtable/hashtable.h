@@ -1,13 +1,13 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
-
-#include <iostream>
-#include <fstream>
-#include <cassert>
 #include <random>
 #include <cstring>
-#include <bitset>
+
+#include "../serialization/object.h"
+#include "../serialization/array.h"
+#include "../serialization/primitive.h"
+
 
 namespace HashTable
 {
@@ -39,6 +39,8 @@ namespace HashTable
 
 		User() = default;
 		~User() = default;
+
+		void Serialize(const T& login, const U& password);
 	};
 
 
@@ -58,6 +60,7 @@ namespace HashTable
 		User<T, U>* Get(const T& login, const U& password) const;
 		int hashTest();
 
+		void AddUserToFile();
 	public:
 		Hashtable();
 		~Hashtable();

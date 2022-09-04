@@ -33,7 +33,7 @@ namespace ObjectModel
 		arr->wrapper = static_cast<uint8_t>(Wrapper::ARRAY);
 		arr->type = static_cast<uint8_t>(type);
 		arr->data = new std::vector<uint8_t>(value.size() * sizeof T);
-		arr->count = value.size();
+		arr->count = static_cast<uint8_t>(value.size());
 
 		arr->size += static_cast<uint8_t>(value.size() * sizeof T);
 
@@ -51,7 +51,7 @@ namespace ObjectModel
 		str->wrapper = static_cast<uint8_t>(Wrapper::STRING);
 		str->type = static_cast<uint8_t>(type);
 		str->data = new std::vector<uint8_t>(value.size());
-		str->count = value.size();
+		str->count = static_cast<uint8_t>(value.size());
 
 		str->size += static_cast<uint8_t>(value.size());
 

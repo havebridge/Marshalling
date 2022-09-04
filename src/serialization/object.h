@@ -14,7 +14,7 @@ namespace ObjectModel
 		Object(std::string name);
 		void addEntitie(Root* r);
 
-		void pack(std::vector<uint8_t>& buffer, uint8_t& iterator) override;
+		virtual void pack(std::vector<uint8_t>& buffer, uint8_t& iterator) override;
 	};
 }
 
