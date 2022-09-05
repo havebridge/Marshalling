@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 
 
 #if 0
-	const uint8_t tableSize = 255;
+	const uint8_t tableSize = 10;
 	HashTable::Hashtable<std::string, std::string, tableSize> Hashtable;
 	std::vector<HashTable::User<std::string, std::string>> Users;
 
@@ -44,6 +44,11 @@ int main(int argc, char** argv)
 #if TEST_GET
 	//TODO:
 #endif
+
+#if TEST_SERIALIZE
+	Hashtable.Serialize();
+#endif
+
 
 #endif
 

@@ -18,5 +18,6 @@
 #define TEST_GET 0
 #define TEST_PRINT 1
 #define TEST_HASH 0
+#define TEST_SERIALIZE 1
 
 #endif

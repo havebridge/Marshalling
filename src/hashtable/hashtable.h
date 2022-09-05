@@ -19,6 +19,8 @@ namespace HashTable
 		U password;
 		User* next;
 	public:
+		bool isSerialized = false;
+	public:
 		template<typename T, typename U>
 		friend std::istream& operator>>(std::istream& stream, User<T, U>& User);
 
@@ -39,8 +41,6 @@ namespace HashTable
 
 		User() = default;
 		~User() = default;
-
-		void Serialize(const T& login, const U& password);
 	};
 
 
@@ -60,7 +60,7 @@ namespace HashTable
 		User<T, U>* Get(const T& login, const U& password) const;
 		int hashTest();
 
-		void AddUserToFile();
+		void Serialize();
 	public:
 		Hashtable();
 		~Hashtable();
@@ -342,6 +342,38 @@ namespace HashTable
 		std::cin >> user;
 
 		return static_cast<int>(Hash(user.getLogin())); // uint8_t doesn`t work with ASCII
+	}
+
+
+	template<typename T, typename U, uint8_t tableSize>
+	void Hashtable<T, U, tableSize>::Serialize()
+	{
+		ObjectModel::Object hashtable("Hashtable");
+
+
+		for (uint8_t slot = 0; slot != tableSize; ++slot)
+		{
+			User<T, U>* user = ht[slot];
+			User<T, U>* userNext = user->getNext();
+
+			if (user->isSerialized == true)
+			{
+				continue;
+			}
+
+
+			ObjectModel::Array* Login = ObjectModel::Array::createString(user->getLogin(), ObjectModel::Type::U8, user->getLogin());
+			ObjectModel::Array* Password = ObjectModel::Array::createString(user->getPassword(), ObjectModel::Type::U8, user->getPassword());
+			ObjectModel::Primitive* Next = ObjectModel::Primitive::createPrimitive("Next" , ObjectModel::Type::U32, &userNext);
+
+			hashtable.addEntitie(Login);
+			hashtable.addEntitie(Password);
+			hashtable.addEntitie(Next);
+
+			Core::Util::saveAll(&hashtable);
+			
+			user->isSerialized = true;
+		}
 	}
 };
 
