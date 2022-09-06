@@ -18,8 +18,9 @@ namespace HashTable
 		T login;
 		U password;
 		User* next;
-	public:
+	
 		bool isSerialized = false;
+		bool isNext = false;
 	public:
 		template<typename T, typename U>
 		friend std::istream& operator>>(std::istream& stream, User<T, U>& User);
@@ -27,10 +28,14 @@ namespace HashTable
 		inline T getLogin() const { return login; }
 		inline U getPassword() const { return password; }
 		inline User* getNext() const { return next; }
+		inline bool getIsSerialized() const { return isSerialized; }
+		inline bool getIsNext() const { return isNext; }
 
-		inline void setLogin(T login) { this->login = login; }
-		inline void setPassword(U password) { this->password = password; }
-		inline void setNext(User* next) { this->next = next; }
+		void setLogin(T login) { this->login = login; }
+		void setPassword(U password) { this->password = password; }
+		void setNext(User* next) { this->next = next; }
+		void setIsSerialized(bool isSerialized) { this->isSerialized = isSerialized; }
+		void setIsNext(bool isNext) { this->isNext = isNext; }
 
 	public:
 		User(const T& login, const U& password)
@@ -354,25 +359,36 @@ namespace HashTable
 		for (uint8_t slot = 0; slot != tableSize; ++slot)
 		{
 			User<T, U>* user = ht[slot];
-			User<T, U>* userNext = user->getNext();
 
-			if (user->isSerialized == true)
+			if (user == nullptr || user->getIsSerialized() == true)
 			{
 				continue;
 			}
 
 
-			ObjectModel::Array* Login = ObjectModel::Array::createString(user->getLogin(), ObjectModel::Type::U8, user->getLogin());
-			ObjectModel::Array* Password = ObjectModel::Array::createString(user->getPassword(), ObjectModel::Type::U8, user->getPassword());
-			ObjectModel::Primitive* Next = ObjectModel::Primitive::createPrimitive("Next" , ObjectModel::Type::U32, &userNext);
-
+			ObjectModel::Array* Login = ObjectModel::Array::createString("", ObjectModel::Type::U8, user->getLogin());
+			ObjectModel::Array* Password = ObjectModel::Array::createString("", ObjectModel::Type::U8, user->getPassword());
+			
 			hashtable.addEntitie(Login);
 			hashtable.addEntitie(Password);
-			hashtable.addEntitie(Next);
+
+			while (user->getNext())
+			{
+				user = user->getNext();
+
+				ObjectModel::Array* Login = ObjectModel::Array::createString("", ObjectModel::Type::U8, user->getLogin());
+				ObjectModel::Array* Password = ObjectModel::Array::createString("", ObjectModel::Type::U8, user->getPassword());
+
+				hashtable.addEntitie(Login);
+				hashtable.addEntitie(Password);
+
+				user->setIsSerialized(true);
+				user->setIsNext(true);
+			}
+
+			user->setIsSerialized(true);
 
 			Core::Util::saveAll(&hashtable);
-			
-			user->isSerialized = true;
 		}
 	}
 };
