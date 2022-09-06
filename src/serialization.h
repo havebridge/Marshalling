@@ -14,7 +14,7 @@
 
 
 #define TEST_PUT 1
-#define TEST_REMOVE 1
+#define TEST_REMOVE 0
 #define TEST_GET 0
 #define TEST_PRINT 1
 #define TEST_HASH 0

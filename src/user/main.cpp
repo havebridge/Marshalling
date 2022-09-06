@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 	(void)argc;
 	(void)argv;
 
-#if 1
+#if 0
 	assert(Core::Util::isLittleEndian());
 
 	TestFrame::testPrimitive();
@@ -19,8 +19,8 @@ int main(int argc, char** argv)
 	
 
 
-#if 0
-	const uint8_t tableSize = 10;
+#if 1
+	const uint8_t tableSize = 7;
 	HashTable::Hashtable<std::string, std::string, tableSize> Hashtable;
 	std::vector<HashTable::User<std::string, std::string>> Users;
 
