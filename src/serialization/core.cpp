@@ -42,7 +42,7 @@ namespace Core
 		{
 			uint8_t iterator = 0;
 			std::vector<uint8_t> buffer(data->getSize());
-			std::string filePath = data->getName().substr(0, data->getName().size()).append(".hsbrdg");
+			std::string filePath = "Data/" + data->getName().substr(0, data->getName().size()).append(".hsbrdg");
 			data->pack(buffer, iterator);
 			saveInFile(data, buffer, filePath.c_str());
 		}
