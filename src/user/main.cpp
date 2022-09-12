@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 
 
 #if 1
-	const uint8_t tableSize = 7;
+	const uint8_t tableSize = 9;
 	HashTable::Hashtable<std::string, std::string, tableSize> Hashtable;
 	std::vector<HashTable::User<std::string, std::string>> Users;
 
