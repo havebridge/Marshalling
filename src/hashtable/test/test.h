@@ -42,7 +42,7 @@ namespace Test
 	template<typename T, typename U, uint8_t tableSize>
 	std::vector<HashTable::User<T, U>> PutTest(HashTable::Hashtable<T, U, tableSize>& foo)
 	{
-		const std::string Characters = " abc";
+		const std::string Characters = " ab";
 
 		std::vector<HashTable::User<T, U>> u;
 

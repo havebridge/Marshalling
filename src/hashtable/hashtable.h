@@ -189,6 +189,8 @@ namespace HashTable
 	void Hashtable<T, U, tableSize>::Remove(const T& login, const U& password)
 	{
 		bool isRemoved = false;
+		bool fix = true;
+
 
 		User<T, U>* tmp = nullptr;
 		User<T, U>* prev = nullptr;
@@ -214,6 +216,7 @@ namespace HashTable
 				{
 					if (tmp->getPassword() == password)
 					{
+						fix = false;
 						break;
 					}
 
@@ -241,42 +244,59 @@ namespace HashTable
 				}
 			}
 
-			if (isRemoved == false)
+			if (isRemoved == false && fix == false)
 			{
 				bool isSameLogins = false;
 				std::vector<User<T, U>*> sameLogins;
+				User<T, U>* tmp = ht[bucket];
 
-				for (auto i = ht[bucket]; i != nullptr; i = i->getNext())
+
+				while (tmp->getNext() != nullptr)
 				{
-					if (i->getLogin() == login && i->getPassword() == password)
+					if (tmp->getLogin() == login && tmp->getPassword() == password)
 					{
-						sameLogins.push_back(i);
+						sameLogins.push_back(tmp);
 						isSameLogins = true;
 					}
+
+
+					tmp = tmp->getNext();
 				}
+
 
 				if (isSameLogins == true)
 				{
 					User<T, U>* entity = ht[bucket];
 					User<T, U>* prevEntity = nullptr;
+					User<T, U>* sameLog = sameLogins.front();
 
-					while (entity->getPassword() != sameLogins[0]->getPassword())
+
+					while (entity->getPassword() != sameLog->getPassword())
 					{
 						prevEntity = entity;
 						entity = entity->getNext();
 					}
+
+
 					if (prevEntity == nullptr)
 					{
 						ht[bucket] = entity->getNext();
 						delete entity;
+						isRemoved = true;
 					}
 					else
 					{
 						prevEntity->setNext(entity->getNext());
 						delete entity;
+						isRemoved = true;
 					}
 				}
 			}
+		}
+
+		if (isRemoved == false)
+		{
+			std::cerr << "The key is not found" << std::endl;
 		}
 	}
 
@@ -387,9 +407,9 @@ namespace HashTable
 			}
 
 			user->setIsSerialized(true);
-
-			Core::Util::saveAll(&hashtable);
 		}
+
+		Core::Util::saveAll(&hashtable);
 	}
 };
 
