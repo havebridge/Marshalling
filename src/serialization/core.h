@@ -25,10 +25,8 @@ namespace Core
 	template<typename T>
 	void encode(std::vector<uint8_t>& buffer, uint8_t& iterator, T value)
 	{
-		for (uint8_t i = 0, j = 0; i != sizeof T; ++i)
-		{
-			buffer[(iterator)++] = (value >> ((sizeof T * 8) - 8) - ((i == 0) ? j : j += 8));
-		}
+		for (int i = (sizeof T * 8) - 8; i >= 0; i -= 8)
+			buffer[iterator++] = value >> i;
 	}
 
 	template<>
