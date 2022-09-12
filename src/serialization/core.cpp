@@ -11,17 +11,24 @@ namespace Core
 			return (result.back() == '1') ? true : false;
 		}
 
-		void saveInFile(const std::vector<uint8_t>& buffer, const char* filePath)
+		void saveInFile(ObjectModel::Root* data, const std::vector<uint8_t>& buffer, const char* filePath)
 		{
 			std::ofstream file;
 			file.open(filePath);
 
 			if (file.is_open())
 			{
-				for (uint8_t i = 0; i != buffer.size(); ++i)
+				uint8_t i = 0;
+				while (i != data->getSize())
+				{
+					file << buffer[i++];
+				}
+
+
+				/*for (uint8_t i = 0; i != buffer.size(); ++i)
 				{
 					file << buffer[i];
-				}
+				}*/
 
 				file.close();
 
@@ -37,7 +44,7 @@ namespace Core
 			std::vector<uint8_t> buffer(data->getSize());
 			std::string filePath = data->getName().substr(0, data->getName().size()).append(".hsbrdg");
 			data->pack(buffer, iterator);
-			saveInFile(buffer, filePath.c_str());
+			saveInFile(data, buffer, filePath.c_str());
 		}
 	}
 }

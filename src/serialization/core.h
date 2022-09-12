@@ -18,7 +18,7 @@ namespace Core
 	namespace Util
 	{
 		bool isLittleEndian();
-		void saveInFile(const std::vector<uint8_t>& buffer, const char* filePath);
+		void saveInFile(ObjectModel::Root* data, const std::vector<uint8_t>& buffer, const char* filePath);
 		void saveAll(ObjectModel::Root* data);
 	}
 

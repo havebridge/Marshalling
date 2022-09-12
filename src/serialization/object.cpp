@@ -24,7 +24,7 @@ namespace ObjectModel
 		Core::encode<uint8_t>(buffer, iterator, nameLength);
 		Core::encode<uint8_t>(buffer, iterator, wrapper);
 		Core::encode<uint8_t>(buffer, iterator, count);
-		
+
 		for (Root* r : entities)
 		{
 			r->pack(buffer, iterator);
