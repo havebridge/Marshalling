@@ -100,8 +100,30 @@ namespace Test
 
 
 	template<typename T, typename U, uint8_t tableSize>
-	bool GetTest(HashTable::Hashtable<T, U, tableSize>& foo, const T& Login, const U& Password)
+	bool GetTest(const HashTable::Hashtable<T, U, tableSize>& entity)
 	{
-		//TODO:
+		bool isFound = false;
+
+		HashTable::User<T, U> user;
+
+		std::cin >> user;
+	
+		for (uint8_t slot = 0; slot != tableSize; ++slot)
+		{
+			HashTable::User<T, U>* tmp = entity.ht[slot];				//TODO: doesn`t work with the private data(hashtable)
+
+			while (tmp != nullptr)
+			{
+				if (tmp->getLogin() == user.getLogin() && tmp->getPassword() == user.getPassword())
+				{
+					isFound = true;
+					break;
+				}
+
+				tmp = tmp->getNext();
+			}
+		}
+
+		return isFound;
 	}
 }

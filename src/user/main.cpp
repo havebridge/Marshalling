@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 	(void)argc;
 	(void)argv;
 
-#if 0
+#if 1
 	assert(Core::Util::isLittleEndian());
 
 	TestFrame::testPrimitive();
@@ -42,7 +42,7 @@ int main(int argc, char** argv)
 #endif
 
 #if TEST_GET
-	//TODO:
+	std::cout << Test::GetTest<std::string, std::string, tableSize>(Hashtable);
 #endif
 
 #if TEST_SERIALIZE

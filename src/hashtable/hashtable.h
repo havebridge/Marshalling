@@ -347,12 +347,14 @@ namespace HashTable
 
 			if (isFounded == false)
 			{
-				for (auto i = ht[bucket]; i != nullptr; i = i->getNext())
+				User<T, U>* tmp = ht[bucket];
+				while (tmp != nullptr)
 				{
-					if (i->getLogin() == login && i->getPassword() == password)
+					if (tmp->getLogin() == login && tmp->getPassword() == password)
 					{
-						return i;
+						return tmp;
 					}
+					tmp = tmp->getNext();
 				}
 			}
 		}
