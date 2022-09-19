@@ -26,14 +26,14 @@ namespace TestFrame
 		ObjectModel::Primitive* floatingP = ObjectModel::Primitive::createPrimitive("FLOAT", ObjectModel::Type::FLOAT, floating);
 		ObjectModel::Primitive* doubleP = ObjectModel::Primitive::createPrimitive("DOUBLE", ObjectModel::Type::DOUBLE, doubleFloating);
 
-		Core::Util::saveAll(u8p);
-		Core::Util::saveAll(u16p);
-		Core::Util::saveAll(u32p);
-		Core::Util::saveAll(u64p);
+		Core::Utility::saveAll(u8p);
+		Core::Utility::saveAll(u16p);
+		Core::Utility::saveAll(u32p);
+		Core::Utility::saveAll(u64p);
 
-		Core::Util::saveAll(booleanP);
-		Core::Util::saveAll(floatingP);
-		Core::Util::saveAll(doubleP);
+		Core::Utility::saveAll(booleanP);
+		Core::Utility::saveAll(floatingP);
+		Core::Utility::saveAll(doubleP);
 	}
 }
 

@@ -1,39 +1,35 @@
-#ifndef ROOT_H
-#define ROOT_H
+#pragma once
 
-#include <string>
-
+#include "core.h"
 
 namespace ObjectModel
 {
 	class Root
 	{
 	protected:
-		uint8_t wrapper;
 		std::string name;
-		uint8_t nameLength;
-		uint8_t size;
-	public:
+		uint8_t wrapper;
+		uint8_t nameLenght;
+		uint32_t size;
+	protected:
 		Root()
 			:
 			name("unknown"),
 			wrapper(0),
-			nameLength(0),
-			size(sizeof wrapper + sizeof nameLength + sizeof size) {}
-
+			nameLenght(0),
+			size(sizeof wrapper + sizeof nameLenght + sizeof size) {}
 	public:
-		inline uint8_t getSize() const { return size; }
-		inline std::string getName() const { return name; }
-
 		void setName(std::string name)
 		{
 			this->name = name;
-			nameLength += static_cast<uint8_t>(name.size());
-			this->size += nameLength;
+			nameLenght += static_cast<uint8_t>(name.size());
+			size += nameLenght;
 		}
 
-		virtual void pack(std::vector<uint8_t>& buffer, uint8_t& iterator) = 0;		//pure virtual
+		uint32_t getSize() const { return size; }
+		std::string getName() const { return name; }
+
+		virtual void pack(std::vector<uint8_t>&, uint16_t&) = 0;
+
 	};
 }
-
-#endif

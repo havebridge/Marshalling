@@ -3,25 +3,25 @@
 
 namespace Test
 {
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	bool isGoodHashTest()
 	{
 		HashTable::Hashtable<T, U, tableSize> foo;
 		std::vector<std::string> same;
 
-		const uint8_t num = tableSize * 2;
+		const int num = tableSize * 2;
 
-		for (uint8_t i = 0; i != num; ++i)
+		for (int i = 0; i != num; ++i)
 		{
 			same.push_back(to_string(foo.hashTest()));
 		}
 
 
-		uint8_t k = 0;
-		for (uint8_t i = 1; i < num; ++i)
+		int k = 0;
+		for (int i = 1; i < num; ++i)
 		{
 			k = 1;
-			for (uint8_t j = 0; j < i; ++j)
+			for (int j = 0; j < i; ++j)
 			{
 				if (same.at(i) == same.at(j))
 				{
@@ -39,7 +39,7 @@ namespace Test
 	}
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	std::vector<HashTable::User<T, U>> PutTest(HashTable::Hashtable<T, U, tableSize>& foo)
 	{
 		const std::string Characters = " ab";
@@ -53,13 +53,13 @@ namespace Test
 		T login_put;
 		U password_put;
 
-		for (uint16_t i = 0; i != tableSize * 2; ++i)
+		for (int i = 0; i != tableSize * 2; ++i)
 		{
 			HashTable::User<T, U> user;
 
-			uint8_t number = distribution(generator);
+			int number = distribution(generator);
 
-			for (uint8_t j = 0; j != number; ++j)
+			for (int j = 0; j != number; ++j)
 			{
 				login_put += Characters[distribution(generator)];
 				password_put += Characters[distribution(generator)];
@@ -81,7 +81,7 @@ namespace Test
 
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	void RemoveTest(HashTable::Hashtable<T, U, tableSize>& foo, std::vector<HashTable::User<std::string, std::string>> Users)
 	{
 		int i = 1;
@@ -99,7 +99,7 @@ namespace Test
 	}
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	bool GetTest(const HashTable::Hashtable<T, U, tableSize>& entity)
 	{
 		bool isFound = false;
@@ -108,7 +108,7 @@ namespace Test
 
 		std::cin >> user;
 	
-		for (uint8_t slot = 0; slot != tableSize; ++slot)
+		for (int slot = 0; slot != tableSize; ++slot)
 		{
 			HashTable::User<T, U>* tmp = entity.ht[slot];				//TODO: doesn`t work with the private data(hashtable)
 

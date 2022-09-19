@@ -1,5 +1,4 @@
-#ifndef PRIMITIVE_H
-#define PRIMITIVE_H
+#pragma once
 
 #include "core.h"
 
@@ -12,33 +11,26 @@ namespace ObjectModel
 		std::vector<uint8_t>* data = nullptr;
 	private:
 		Primitive();
-
 	public:
+
 		template<typename T>
-		static Primitive* createPrimitive(std::string name, Type type, T value);
+		static Primitive* createPrimitive(std::string name, Type type, T value)
+		{
+			Primitive* p = new Primitive();
+			p->setName(name);
+			p->wrapper = static_cast<uint8_t>(Wrapper::PRIMITIVE);
+			p->type = static_cast<uint8_t>(type);
+			p->data = new std::vector<uint8_t>(sizeof value);
 
-		virtual void pack(std::vector<uint8_t>& buffer, uint8_t& iterator) override;
+			p->size += static_cast<uint32_t>(p->data->size());
+
+			uint16_t iterator = 0;
+			Core::template encode<T>(*p->data, iterator, value);
+
+			return p;
+		}
+
+
+		virtual void pack(std::vector<uint8_t>&, uint16_t&) override;
 	};
-
-
-	//definition
-	template<typename T>
-	static Primitive* Primitive::createPrimitive(std::string name, Type type, T value)
-	{
-		Primitive* p = new Primitive();
-		p->setName(name);
-		p->wrapper = static_cast<uint8_t>(Wrapper::PRIMITIVE);
-		p->type = static_cast<uint8_t>(type);
-		p->data = new std::vector<uint8_t>(sizeof value);
-
-		p->size += static_cast<uint8_t>(p->data->size());
-
-		uint8_t iterator = 0;
-		Core::template encode<T>(*p->data, iterator, value);
-
-		return p;
-	}
 }
-
-
-#endif

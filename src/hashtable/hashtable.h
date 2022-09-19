@@ -18,18 +18,17 @@ namespace HashTable
 		T login;
 		U password;
 		User* next;
-	
 		bool isSerialized = false;
 		bool isNext = false;
 	public:
 		template<typename T, typename U>
 		friend std::istream& operator>>(std::istream& stream, User<T, U>& User);
 
-		inline T getLogin() const { return login; }
-		inline U getPassword() const { return password; }
-		inline User* getNext() const { return next; }
-		inline bool getIsSerialized() const { return isSerialized; }
-		inline bool getIsNext() const { return isNext; }
+		T getLogin() const { return login; }
+		U getPassword() const { return password; }
+		User* getNext() const { return next; }
+		bool getIsSerialized() const { return isSerialized; }
+		bool getIsNext() const { return isNext; }
 
 		void setLogin(T login) { this->login = login; }
 		void setPassword(U password) { this->password = password; }
@@ -42,24 +41,28 @@ namespace HashTable
 			:
 			login(login),
 			password(password),
-			next(nullptr) {}
+			next(nullptr),
+			isSerialized(false),
+			isNext(true) {}
 
 		User() = default;
 		~User() = default;
 	};
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	class Hashtable
 	{
 	private:
 		User<T, U>* ht[tableSize];
 
+		int inTable = 0;
+
 	public:
-		template<typename T, typename U, uint8_t tableSize>
+		template<typename T, typename U, int tableSize>
 		friend std::ostream& operator<<(std::ostream& stream, const Hashtable<T, U, tableSize>& Hashtable);
 
-		uint8_t Hash(const T& login) const;
+		int Hash(const T& login) const;
 		void Put(const T& login, const U& password);
 		void Remove(const T& login, const U& password);
 		User<T, U>* Get(const T& login, const U& password) const;
@@ -73,16 +76,16 @@ namespace HashTable
 
 
 	//definition
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	Hashtable<T, U, tableSize>::Hashtable()
 		:
 		ht() {}
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	Hashtable<T, U, tableSize>::~Hashtable()
 	{
-		for (uint8_t bucket = 0; bucket != tableSize; ++bucket)
+		for (int bucket = 0; bucket != tableSize; ++bucket)
 		{
 			User<T, U>* entry = ht[bucket];
 
@@ -112,10 +115,10 @@ namespace HashTable
 	}
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	std::ostream& operator<<(std::ostream& stream, const Hashtable<T, U, tableSize>& hashtable)
 	{
-		for (uint8_t bucket = 0; bucket != tableSize; ++bucket)
+		for (int bucket = 0; bucket != tableSize; ++bucket)
 		{
 			User<T, U>* user = hashtable.ht[bucket];
 
@@ -144,14 +147,14 @@ namespace HashTable
 	}
 
 
-	template<typename T, typename U, uint8_t tableSize>
-	uint8_t Hashtable<T, U, tableSize>::Hash(const T& login) const
+	template<typename T, typename U, int tableSize>
+	int Hashtable<T, U, tableSize>::Hash(const T& login) const
 	{
-		uint8_t hashKey = 0;
+		int hashKey = 0;
 
 		std::random_device randomDevice;
 		std::mt19937 generator(randomDevice());
-		std::uniform_int_distribution<std::mt19937::result_type> distribution(0, tableSize - 1);
+		std::uniform_int_distribution<std::mt19937::result_type> distribution(1, tableSize);
 
 		hashKey = (distribution(generator) + login.size()) % tableSize;
 
@@ -159,10 +162,10 @@ namespace HashTable
 	}
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	void Hashtable<T, U, tableSize>::Put(const T& login, const U& password)
 	{
-		uint8_t key = Hash(login);
+		int key = Hash(login);
 		User<T, U>* entry = ht[key];
 		User<T, U>* prev = nullptr;
 
@@ -182,10 +185,12 @@ namespace HashTable
 			entry = new User<T, U>(login, password);
 			prev->setNext(entry);
 		}
+
+		inTable++;
 	}
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	void Hashtable<T, U, tableSize>::Remove(const T& login, const U& password)
 	{
 		bool isRemoved = false;
@@ -195,7 +200,7 @@ namespace HashTable
 		User<T, U>* tmp = nullptr;
 		User<T, U>* prev = nullptr;
 
-		for (uint8_t bucket = 0; bucket != tableSize; ++bucket)
+		for (int bucket = 0; bucket != tableSize; ++bucket)
 		{
 			if (isRemoved == true)
 			{
@@ -231,6 +236,7 @@ namespace HashTable
 						ht[bucket] = tmp->getNext();
 						delete tmp;
 						isRemoved = true;
+						inTable--;
 					}
 				}
 				else
@@ -240,6 +246,7 @@ namespace HashTable
 						prev->setNext(tmp->getNext());
 						delete tmp;
 						isRemoved = true;
+						inTable--;
 					}
 				}
 			}
@@ -283,12 +290,14 @@ namespace HashTable
 						ht[bucket] = entity->getNext();
 						delete entity;
 						isRemoved = true;
+						inTable--;
 					}
 					else
 					{
 						prevEntity->setNext(entity->getNext());
 						delete entity;
 						isRemoved = true;
+						inTable--;
 					}
 				}
 			}
@@ -301,7 +310,7 @@ namespace HashTable
 	}
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	User<T, U>* Hashtable<T, U, tableSize>::Get(const T& login, const U& password) const
 	{
 		bool isFounded = false;
@@ -309,7 +318,7 @@ namespace HashTable
 		User<T, U>* tmp = nullptr;
 		User<T, U>* prev = nullptr;
 
-		for (uint8_t bucket = 0; bucket != tableSize; ++bucket)
+		for (int bucket = 0; bucket != tableSize; ++bucket)
 		{
 			if (ht[bucket] == nullptr)
 			{
@@ -361,7 +370,7 @@ namespace HashTable
 	}
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	int Hashtable<T, U, tableSize>::hashTest()
 	{
 		User<T, U> user;
@@ -372,46 +381,48 @@ namespace HashTable
 	}
 
 
-	template<typename T, typename U, uint8_t tableSize>
+	template<typename T, typename U, int tableSize>
 	void Hashtable<T, U, tableSize>::Serialize()
 	{
-		ObjectModel::Object hashtable("Hashtable");
+		ObjectModel::Object hashtable("hashtable");
 
-
-		for (uint8_t slot = 0; slot != tableSize; ++slot)
+		for (int slot = 0; slot != tableSize; ++slot)
 		{
-			User<T, U>* user = ht[slot];
+			User<T, U>* tmp = ht[slot];
 
-			if (user == nullptr || user->getIsSerialized() == true)
+			if (tmp == nullptr || tmp->getIsSerialized() == true)
 			{
 				continue;
 			}
 
+			ObjectModel::Array* Login = ObjectModel::Array::createString("Login:", ObjectModel::Type::U8, tmp->getLogin());
+			ObjectModel::Array* Password = ObjectModel::Array::createString("Password:", ObjectModel::Type::U8, tmp->getPassword());
 
-			ObjectModel::Array* Login = ObjectModel::Array::createString("", ObjectModel::Type::U8, user->getLogin());
-			ObjectModel::Array* Password = ObjectModel::Array::createString("", ObjectModel::Type::U8, user->getPassword());
-			
 			hashtable.addEntitie(Login);
 			hashtable.addEntitie(Password);
 
-			while (user->getNext())
+			while (tmp->getNext() != nullptr)
 			{
-				user = user->getNext();
+				tmp = tmp->getNext();
 
-				ObjectModel::Array* Login = ObjectModel::Array::createString("", ObjectModel::Type::U8, user->getLogin());
-				ObjectModel::Array* Password = ObjectModel::Array::createString("", ObjectModel::Type::U8, user->getPassword());
+				ObjectModel::Array* Login = ObjectModel::Array::createString("Login:", ObjectModel::Type::U8, tmp->getLogin());
+				ObjectModel::Array* Password = ObjectModel::Array::createString("Password:", ObjectModel::Type::U8, tmp->getPassword());
 
 				hashtable.addEntitie(Login);
 				hashtable.addEntitie(Password);
 
-				user->setIsSerialized(true);
-				user->setIsNext(true);
+				tmp->setIsSerialized(true);
+				tmp->setIsNext(true);
 			}
 
-			user->setIsSerialized(true);
+			tmp->setIsSerialized(true);
 		}
 
-		Core::Util::saveAll(&hashtable);
+
+		ObjectModel::Primitive* numUsers = ObjectModel::Primitive::createPrimitive("inTable", ObjectModel::Type::U32, inTable);
+		hashtable.addEntitie(numUsers);
+
+		Core::Utility::saveAll(&hashtable);
 	}
 };
 

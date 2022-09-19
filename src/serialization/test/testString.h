@@ -9,7 +9,7 @@ namespace TestFrame
 	{
 		std::string name = "name";
 		ObjectModel::Array* str = ObjectModel::Array::createString("string", ObjectModel::Type::U8, name);
-		Core::Util::saveAll(str);
+		Core::Utility::saveAll(str);
 	}
 }
 

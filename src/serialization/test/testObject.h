@@ -25,7 +25,7 @@ namespace TestFrame
 		Test.addEntitie(u32p);
 		Test.addEntitie(u64p);
 
-		Core::Util::saveAll(&Test);
+		Core::Utility::saveAll(&Test);
 	}
 }
 

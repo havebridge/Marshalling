@@ -8,9 +8,9 @@ namespace TestFrame
 {
 	inline void testArray()
 	{
-		std::vector<uint8_t> data{ 1,2,3,4 };
+		std::vector<uint8_t> data{ 1,2,3 };
 		ObjectModel::Array* arr = ObjectModel::Array::createArray("array", ObjectModel::Type::U8, data);
-		Core::Util::saveAll(arr);
+		Core::Utility::saveAll(arr);
 	}
 }
 

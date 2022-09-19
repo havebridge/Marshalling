@@ -6,8 +6,30 @@ int main(int argc, char** argv)
 	(void)argc;
 	(void)argv;
 
-#if 1
-	assert(Core::Util::isLittleEndian());
+#if 0
+	uint8_t foo = 5;
+
+	ObjectModel::Primitive* p = ObjectModel::Primitive::createPrimitive("foo", ObjectModel::Type::U8, foo);
+
+	Core::Utility::saveAll(p);
+
+
+	std::string name = "hyesos";
+
+	ObjectModel::Array* p1 = ObjectModel::Array::createString("n", ObjectModel::Type::U8, name);
+
+	Core::Utility::saveAll(p1);
+
+	ObjectModel::Object object("object");
+
+	object.addEntitie(p);
+	object.addEntitie(p1);
+
+	Core::Utility::saveAll(&object);
+#endif
+
+#if 0
+	assert(Core::Utility::isLittleEndian());
 
 	TestFrame::testPrimitive();
 	TestFrame::testArray();
@@ -17,10 +39,8 @@ int main(int argc, char** argv)
 	TestFrame::testObject();
 #endif
 	
-
-
 #if 1
-	const uint8_t tableSize = 9;
+	const int tableSize = 100;
 	HashTable::Hashtable<std::string, std::string, tableSize> Hashtable;
 	std::vector<HashTable::User<std::string, std::string>> Users;
 

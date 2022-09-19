@@ -1,5 +1,5 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#pragma once
+
 
 #include "core.h"
 
@@ -9,13 +9,12 @@ namespace ObjectModel
 	{
 	private:
 		std::vector<Root*> entities;
-		uint8_t count;
+		uint32_t count = 0;
 	public:
-		Object(std::string name);
-		void addEntitie(Root* r);
+		Object(std::string);
+	public:
+		void addEntitie(Root*);
 
-		virtual void pack(std::vector<uint8_t>& buffer, uint8_t& iterator) override;
+		virtual void pack(std::vector<uint8_t>&, uint16_t&) override;
 	};
 }
-
-#endif

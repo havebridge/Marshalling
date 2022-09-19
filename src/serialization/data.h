@@ -1,10 +1,18 @@
-#ifndef DATA_H
-#define DATA_H
+#pragma once
 
 #include <cstdint>
 
 namespace ObjectModel
 {
+	enum class Wrapper : uint8_t
+	{
+		PRIMITIVE = 1,
+		ARRAY,
+		STRING,
+		OBJECT
+	};
+
+
 	enum class Type : uint8_t
 	{
 		U8 = 1,
@@ -15,16 +23,6 @@ namespace ObjectModel
 		BOOL,
 
 		FLOAT,
-		DOUBLE,
-	};
-
-	enum class Wrapper : uint8_t
-	{
-		PRIMITIVE = 1,
-		STRING,
-		ARRAY,
-		OBJECT
+		DOUBLE
 	};
 }
-
-#endif

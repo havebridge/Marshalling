@@ -2,7 +2,7 @@
 
 namespace Core
 {
-	namespace Util
+	namespace Utility
 	{
 		bool isLittleEndian()
 		{
@@ -11,40 +11,35 @@ namespace Core
 			return (result.back() == '1') ? true : false;
 		}
 
-		void saveInFile(ObjectModel::Root* data, const std::vector<uint8_t>& buffer, const char* filePath)
+		void SaveInFile(const std::vector<uint8_t>& buffer, const char* path)
 		{
 			std::ofstream file;
-			file.open(filePath);
+
+			file.open(path);
 
 			if (file.is_open())
 			{
-				uint8_t i = 0;
-				while (i != data->getSize())
-				{
-					file << buffer[i++];
-				}
-
-
-				/*for (uint8_t i = 0; i != buffer.size(); ++i)
+				for (int i = 0; i != buffer.size(); ++i)
 				{
 					file << buffer[i];
-				}*/
+				}
 
 				file.close();
 
 				return;
 			}
 
-			std::cerr << "Unable to open file: " << filePath;
+			std::cerr << "Unable to open the file" << std::endl;
 		}
 
-		void saveAll(ObjectModel::Root* data)
+		void saveAll(ObjectModel::Root* entity)
 		{
-			uint8_t iterator = 0;
-			std::vector<uint8_t> buffer(data->getSize());
-			std::string filePath = "Data/" + data->getName().substr(0, data->getName().size()).append(".hsbrdg");
-			data->pack(buffer, iterator);
-			saveInFile(data, buffer, filePath.c_str());
+			uint16_t iterator = 0;
+			std::vector<uint8_t> buffer(entity->getSize());
+			std::string result = "Data/" + entity->getName().substr(0, entity->getName().size()).append(".hsbrdg");
+			entity->pack(buffer, iterator);
+			SaveInFile(buffer, result.c_str());
 		}
 	}
+
 }
