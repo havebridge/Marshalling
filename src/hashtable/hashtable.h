@@ -15,9 +15,9 @@ namespace HashTable
 	class User
 	{
 	private:
-		T login;
-		U password;
-		User* next;
+		T login = 0;
+		U password = 0;
+		User* next = nullptr;
 		bool isSerialized = false;
 		bool isNext = false;
 	public:
@@ -43,7 +43,7 @@ namespace HashTable
 			password(password),
 			next(nullptr),
 			isSerialized(false),
-			isNext(true) {}
+			isNext(false) {}
 
 		User() = default;
 		~User() = default;
