@@ -17,7 +17,7 @@ namespace ObjectModel
 		template<typename T>
 		static Array* createArray(std::string name, Type type, T value)
 		{
-			Array* arr = new Array();
+			Array* arr(new Array());
 			arr->setName(name);
 			arr->wrapper = static_cast<uint8_t>(Wrapper::ARRAY);
 			arr->type = static_cast<uint8_t>(type);
@@ -36,7 +36,7 @@ namespace ObjectModel
 		template<typename T>
 		static Array* createString(std::string name, Type type, T value)
 		{
-			Array* str = new Array();
+			Array* str(new Array());
 			str->setName(name);
 			str->wrapper = static_cast<uint8_t>(Wrapper::STRING);
 			str->type = static_cast<uint8_t>(type);
