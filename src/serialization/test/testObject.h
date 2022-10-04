@@ -8,10 +8,10 @@ namespace TestFrame
 {
 	inline void testObject()
 	{
-		uint8_t u8 = 111;
-		uint16_t u16 = 500;
-		uint32_t u32 = 765629;
-		uint64_t u64 = 101093901;
+		uint8_t u8 = 1111;
+		uint16_t u16 = 5000;
+		uint32_t u32 = 7656290;
+		uint64_t u64 = 1010939010;
 
 		ObjectModel::Primitive* u8p = ObjectModel::Primitive::createPrimitive("U8", ObjectModel::Type::U8, u8);
 		ObjectModel::Primitive* u16p = ObjectModel::Primitive::createPrimitive("U16", ObjectModel::Type::U16, u16);
