@@ -7,7 +7,7 @@ namespace TestFrame
 {
 	inline void testString()
 	{
-		std::string name = "name";
+		std::string name = "omg";
 		ObjectModel::Array* str = ObjectModel::Array::createString("string", ObjectModel::Type::U8, name);
 		Core::Utility::saveAll(str);
 	}

@@ -8,14 +8,14 @@ namespace TestFrame
 {
 	inline void testPrimitive()
 	{
-		uint8_t u8 = 111;
-		uint16_t u16 = 500;
-		uint32_t u32 = 765629;
-		uint64_t u64 = 101093901;
+		uint8_t u8 = 1111;
+		uint16_t u16 = 5000;
+		uint32_t u32 = 7656290;
+		uint64_t u64 = 1010939010;
 
 		bool boolean = true;
-		float floating = 0.123f;
-		double doubleFloating = 0.829193f;
+		float floating = 0.1234f;
+		double doubleFloating = 0.829192f;
 
 		ObjectModel::Primitive* u8p = ObjectModel::Primitive::createPrimitive("U8", ObjectModel::Type::U8, u8);
 		ObjectModel::Primitive* u16p = ObjectModel::Primitive::createPrimitive("U16", ObjectModel::Type::U16, u16);
