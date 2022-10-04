@@ -15,11 +15,11 @@ namespace HashTable
 	class User
 	{
 	private:
-		T login = 0;
-		U password = 0;
-		User* next = nullptr;
-		bool isSerialized = false;
-		bool isNext = false;
+		T login;
+		U password;
+		User* next ;
+		bool isSerialized;
+		bool isNext;
 	public:
 		template<typename T, typename U>
 		friend std::istream& operator>>(std::istream& stream, User<T, U>& User);
@@ -366,6 +366,11 @@ namespace HashTable
 					tmp = tmp->getNext();
 				}
 			}
+		}
+
+		if (isFounded == false)
+		{
+			std::cerr << "The key is not found" << std::endl;
 		}
 	}
 
