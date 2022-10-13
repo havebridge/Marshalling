@@ -1,5 +1,4 @@
-#ifndef HASHTABLE_H
-#define HASHTABLE_H
+#pragma once
 
 #include <random>
 #include <cstring>
@@ -54,7 +53,7 @@ namespace HashTable
 	class Hashtable
 	{
 	private:
-		User<T, U>* ht[tableSize];
+		User<T, U>** ht;
 
 		int inTable = 0;
 
@@ -74,13 +73,29 @@ namespace HashTable
 		~Hashtable();
 	};
 
-
+#if 0
 	//definition
 	template<typename T, typename U, int tableSize>
 	Hashtable<T, U, tableSize>::Hashtable()
 		:
 		ht() {}
 
+#endif
+
+#if 1
+	//definition
+	template<typename T, typename U, int tableSize>
+	Hashtable<T, U, tableSize>::Hashtable()
+	{
+		ht = new User<T, U> * [tableSize];
+		for (int slot = 0; slot != tableSize; ++slot)
+		{
+			ht[slot] = new User<T, U>();
+			ht[slot] = nullptr;
+		}
+	}
+
+#endif
 
 	template<typename T, typename U, int tableSize>
 	Hashtable<T, U, tableSize>::~Hashtable()
@@ -194,7 +209,7 @@ namespace HashTable
 	void Hashtable<T, U, tableSize>::Remove(const T& login, const U& password)
 	{
 		bool isRemoved = false;
-		bool fix = true;
+		bool fix = false;
 
 
 		User<T, U>* tmp = nullptr;
@@ -216,12 +231,13 @@ namespace HashTable
 				isRemoved = false;
 
 				tmp = ht[bucket];
+				prev = nullptr;
 
-				while (tmp->getLogin() != login && tmp->getNext() != nullptr)
+				while ((tmp->getLogin() != login && tmp->getPassword() != password) && tmp->getNext() != nullptr)
 				{
 					if (tmp->getPassword() == password)
 					{
-						fix = false;
+						fix = true;
 						break;
 					}
 
@@ -251,7 +267,7 @@ namespace HashTable
 				}
 			}
 
-			if (isRemoved == false && fix == false)
+			if (isRemoved == false && fix == true)
 			{
 				bool isSameLogins = false;
 				std::vector<User<T, U>*> sameLogins;
@@ -400,21 +416,21 @@ namespace HashTable
 				continue;
 			}
 
-			ObjectModel::Array* Login = ObjectModel::Array::createString("Login:", ObjectModel::Type::U8, tmp->getLogin());
-			ObjectModel::Array* Password = ObjectModel::Array::createString("Password:", ObjectModel::Type::U8, tmp->getPassword());
+			std::shared_ptr<ObjectModel::Array> Login = ObjectModel::Array::createString("Login:", ObjectModel::Type::U8, tmp->getLogin());
+			std::shared_ptr<ObjectModel::Array> Password = ObjectModel::Array::createString("Password:", ObjectModel::Type::U8, tmp->getPassword());
 
-			hashtable.addEntitie(Login);
-			hashtable.addEntitie(Password);
+			hashtable.addEntitie(Login.get());
+			hashtable.addEntitie(Password.get());
 
 			while (tmp->getNext() != nullptr)
 			{
 				tmp = tmp->getNext();
 
-				ObjectModel::Array* Login = ObjectModel::Array::createString("Login:", ObjectModel::Type::U8, tmp->getLogin());
-				ObjectModel::Array* Password = ObjectModel::Array::createString("Password:", ObjectModel::Type::U8, tmp->getPassword());
+				std::shared_ptr<ObjectModel::Array> Login = ObjectModel::Array::createString("Login:", ObjectModel::Type::U8, tmp->getLogin());
+				std::shared_ptr<ObjectModel::Array> Password = ObjectModel::Array::createString("Password:", ObjectModel::Type::U8, tmp->getPassword());
 
-				hashtable.addEntitie(Login);
-				hashtable.addEntitie(Password);
+				hashtable.addEntitie(Login.get());
+				hashtable.addEntitie(Password.get());
 
 				tmp->setIsSerialized(true);
 				tmp->setIsNext(true);
@@ -424,11 +440,9 @@ namespace HashTable
 		}
 
 
-		ObjectModel::Primitive* numUsers = ObjectModel::Primitive::createPrimitive("inTable", ObjectModel::Type::U32, inTable);
-		hashtable.addEntitie(numUsers);
+		std::shared_ptr<ObjectModel::Primitive> numUsers = ObjectModel::Primitive::createPrimitive("inTable", ObjectModel::Type::U32, inTable);
+		hashtable.addEntitie(numUsers.get());
 
 		Core::Utility::saveAll(&hashtable);
 	}
 };
-
-#endif

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../hashtable.h"
 
 
@@ -42,7 +44,7 @@ namespace Test
 	template<typename T, typename U, int tableSize>
 	std::vector<HashTable::User<T, U>> PutTest(HashTable::Hashtable<T, U, tableSize>& foo)
 	{
-		const std::string Characters = " ab";
+		const std::string Characters = " abcd";
 
 		std::vector<HashTable::User<T, U>> u;
 
