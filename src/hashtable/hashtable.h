@@ -73,16 +73,7 @@ namespace HashTable
 		~Hashtable();
 	};
 
-#if 0
-	//definition
-	template<typename T, typename U, int tableSize>
-	Hashtable<T, U, tableSize>::Hashtable()
-		:
-		ht() {}
 
-#endif
-
-#if 1
 	//definition
 	template<typename T, typename U, int tableSize>
 	Hashtable<T, U, tableSize>::Hashtable()
@@ -94,8 +85,6 @@ namespace HashTable
 			ht[slot] = nullptr;
 		}
 	}
-
-#endif
 
 	template<typename T, typename U, int tableSize>
 	Hashtable<T, U, tableSize>::~Hashtable()
@@ -416,8 +405,8 @@ namespace HashTable
 				continue;
 			}
 
-			std::shared_ptr<ObjectModel::Array> Login = ObjectModel::Array::createString("Login:", ObjectModel::Type::U8, tmp->getLogin());
-			std::shared_ptr<ObjectModel::Array> Password = ObjectModel::Array::createString("Password:", ObjectModel::Type::U8, tmp->getPassword());
+			std::unique_ptr<ObjectModel::Array> Login = ObjectModel::Array::createString("Login:", ObjectModel::Type::U8, tmp->getLogin());
+			std::unique_ptr<ObjectModel::Array> Password = ObjectModel::Array::createString("Password:", ObjectModel::Type::U8, tmp->getPassword());
 
 			hashtable.addEntitie(Login.get());
 			hashtable.addEntitie(Password.get());
@@ -426,8 +415,8 @@ namespace HashTable
 			{
 				tmp = tmp->getNext();
 
-				std::shared_ptr<ObjectModel::Array> Login = ObjectModel::Array::createString("Login:", ObjectModel::Type::U8, tmp->getLogin());
-				std::shared_ptr<ObjectModel::Array> Password = ObjectModel::Array::createString("Password:", ObjectModel::Type::U8, tmp->getPassword());
+				std::unique_ptr<ObjectModel::Array> Login = ObjectModel::Array::createString("Login:", ObjectModel::Type::U8, tmp->getLogin());
+				std::unique_ptr<ObjectModel::Array> Password = ObjectModel::Array::createString("Password:", ObjectModel::Type::U8, tmp->getPassword());
 
 				hashtable.addEntitie(Login.get());
 				hashtable.addEntitie(Password.get());
@@ -440,7 +429,7 @@ namespace HashTable
 		}
 
 
-		std::shared_ptr<ObjectModel::Primitive> numUsers = ObjectModel::Primitive::createPrimitive("inTable", ObjectModel::Type::U32, inTable);
+		std::unique_ptr<ObjectModel::Primitive> numUsers = ObjectModel::Primitive::createPrimitive("inTable", ObjectModel::Type::U32, inTable);
 		hashtable.addEntitie(numUsers.get());
 
 		Core::Utility::saveAll(&hashtable);
