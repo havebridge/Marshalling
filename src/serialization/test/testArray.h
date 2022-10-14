@@ -1,5 +1,4 @@
-#ifndef ARRAY_TEST_H
-#define ARRAY_TEST_H
+#pragma once 
 
 #include "../array.h"
 
@@ -9,9 +8,7 @@ namespace TestFrame
 	inline void testArray()
 	{
 		std::vector<uint8_t> data{ 1,2,3 };
-		ObjectModel::Array* arr = ObjectModel::Array::createArray("array", ObjectModel::Type::U8, data);
-		Core::Utility::saveAll(arr);
+		std::unique_ptr<ObjectModel::Array> arr = ObjectModel::Array::createArray("array", ObjectModel::Type::U8, data);
+		Core::Utility::saveAll(arr.get());
 	}
 }
-
-#endif 

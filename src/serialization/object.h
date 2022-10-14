@@ -2,14 +2,19 @@
 
 
 #include "core.h"
+#include "primitive.h"
+#include "array.h"
 
 namespace ObjectModel
 {
 	class Object : public Root
 	{
 	private:
-		std::vector<Root*> entities;
-		uint32_t count = 0;
+		int primitiveCount = 0, arrayCount = 0, stringCount = 0, objectCount = 0;
+		std::vector<Primitive> primitives;
+		std::vector<Array> arrays;
+		std::vector<Array> strings;
+		std::vector<Object> objects;
 	public:
 		Object(std::string);
 	public:

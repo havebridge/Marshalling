@@ -12,11 +12,10 @@ namespace ObjectModel
 	private:
 		Primitive();
 	public:
-
 		template<typename T>
-		static Primitive* createPrimitive(std::string name, Type type, T value)
+		static std::unique_ptr<Primitive> createPrimitive(std::string name, Type type, T value)
 		{
-			Primitive* p(new Primitive());
+			std::unique_ptr<Primitive> p(new Primitive());
 			p->setName(name);
 			p->wrapper = static_cast<uint8_t>(Wrapper::PRIMITIVE);
 			p->type = static_cast<uint8_t>(type);

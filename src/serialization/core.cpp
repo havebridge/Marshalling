@@ -41,5 +41,4 @@ namespace Core
 			SaveInFile(buffer, result.c_str());
 		}
 	}
-
 }

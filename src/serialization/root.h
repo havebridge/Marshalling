@@ -8,9 +8,10 @@ namespace ObjectModel
 	{
 	protected:
 		std::string name;
-		uint8_t wrapper;
 		uint8_t nameLenght;
 		uint32_t size;
+	public:
+		uint8_t wrapper;
 	protected:
 		Root()
 			:

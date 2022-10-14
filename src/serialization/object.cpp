@@ -12,8 +12,14 @@ namespace ObjectModel
 
 	void Object::addEntitie(Root* entity)
 	{
-		entities.push_back(entity);
-		count += 1;
+		switch (entity->wrapper)
+		{
+		case 1: primitives.push_back(*dynamic_cast<Primitive*>(entity)); primitiveCount++; break;
+		case 2: arrays.push_back(*dynamic_cast<Array*>(entity)); arrayCount++; break;
+		case 3: strings.push_back(*dynamic_cast<Array*>(entity)); stringCount++; break;
+		case 4: objects.push_back(*dynamic_cast<Object*>(entity)); objectCount++; break;
+		}
+
 		size += entity->getSize();
 	}
 
@@ -23,9 +29,28 @@ namespace ObjectModel
 		Core::encode<uint8_t>(buffer, iterator, nameLenght);
 		Core::encode<uint8_t>(buffer, iterator, wrapper);
 
-		for (auto e : entities)
+		Core::encode<int16_t>(buffer, iterator, primitiveCount);
+		for (auto p : primitives)
 		{
-			e->pack(buffer, iterator);
+			p.pack(buffer, iterator);
+		}
+
+		Core::encode<int16_t>(buffer, iterator, arrayCount);
+		for (auto arr : arrays)
+		{
+			arr.pack(buffer, iterator);
+		}
+
+		Core::encode<int16_t>(buffer, iterator, stringCount);
+		for (auto str : strings)
+		{
+			str.pack(buffer, iterator);
+		}
+
+		Core::encode<int16_t>(buffer, iterator, objectCount);
+		for (auto o : objects)
+		{
+			o.pack(buffer, iterator);
 		}
 
 		Core::encode<uint32_t>(buffer, iterator, size);

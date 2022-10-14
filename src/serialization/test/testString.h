@@ -1,5 +1,4 @@
-#ifndef STRING_TEST_H
-#define STRING_TEST_H
+#pragma once
 
 #include "../array.h"
 
@@ -8,9 +7,7 @@ namespace TestFrame
 	inline void testString()
 	{
 		std::string name = "omg";
-		ObjectModel::Array* str = ObjectModel::Array::createString("string", ObjectModel::Type::U8, name);
-		Core::Utility::saveAll(str);
+		std::unique_ptr<ObjectModel::Array> str = ObjectModel::Array::createString("string", ObjectModel::Type::U8, name);
+		Core::Utility::saveAll(str.get());
 	}
 }
-
-#endif 

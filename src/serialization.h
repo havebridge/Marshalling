@@ -1,5 +1,4 @@
-#ifndef SERIALIZATION_H
-#define SERIALIZATION_H
+#pragma once
 
 #include "hashtable/test/test.h"
 #include "serialization/test/testPrimitive.h"
@@ -18,5 +17,3 @@
 #define TEST_PRINT 1
 #define TEST_HASH 0
 #define TEST_SERIALIZE 1
-
-#endif
