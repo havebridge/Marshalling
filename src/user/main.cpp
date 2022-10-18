@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 	(void)argc;
 	(void)argv;
 	
-#if 1
+#if DEBUG
 	const int tableSize = 100;
 	HashTable::Hashtable<std::string, std::string, tableSize> Hashtable;
 	std::vector<HashTable::User<std::string, std::string>> Users;
@@ -38,5 +38,11 @@ int main(int argc, char** argv)
 	Hashtable.Serialize();
 #endif
 #endif
+
+
+#if RELEASE
+	TestFrame::Test();
+#endif
+
 	return 0;
 }
