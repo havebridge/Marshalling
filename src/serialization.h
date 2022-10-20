@@ -9,16 +9,17 @@
 
 #include "serialization/core.h"
 
-#define DEBUG 0
-#define RELEASE 1
+#define DEBUG 1
+#define RELEASE 0
 
 #if DEBUG
 
-#define TEST_PUT 1
-#define TEST_REMOVE 1
+#define TEST_PUT 0
+#define TEST_REMOVE 0
 #define TEST_GET 0
-#define TEST_PRINT 1 
+#define TEST_PRINT 0
 #define TEST_HASH 0
-#define TEST_SERIALIZE 1
+#define TEST_SERIALIZE 0
+#define TEST_DESERIALIZE 1
 
 #endif

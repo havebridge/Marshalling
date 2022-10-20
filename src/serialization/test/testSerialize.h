@@ -41,15 +41,9 @@ namespace TestFrame
 
 				Hashtable.Remove(login, password);
 			} break;
-			case 3:
-			{
-				std::cout << Hashtable;
-			} break;
-			case 4:
-				exit(0);
-			default:
-				std::cerr << "Unknown command" << std::endl;
-				break;
+			
+			case 3: std::cout << Hashtable; break;
+			case 4: exit(0);
 			}
 		}
 	}

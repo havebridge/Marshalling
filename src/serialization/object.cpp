@@ -25,8 +25,8 @@ namespace ObjectModel
 
 	void Object::pack(std::vector<uint8_t>& buffer, uint16_t& iterator)
 	{
+		Core::encode<uint8_t>(buffer, iterator, nameLength);
 		Core::encode<std::string>(buffer, iterator, name);
-		Core::encode<uint8_t>(buffer, iterator, nameLenght);
 		Core::encode<uint8_t>(buffer, iterator, wrapper);
 
 		Core::encode<int16_t>(buffer, iterator, primitiveCount);

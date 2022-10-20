@@ -37,6 +37,17 @@ int main(int argc, char** argv)
 #if TEST_SERIALIZE
 	Hashtable.Serialize();
 #endif
+
+#if TEST_DESERIALIZE
+	uint8_t a = 25;
+	std::unique_ptr<ObjectModel::Primitive> p = ObjectModel::Primitive::createPrimitive("pidor", ObjectModel::Type::U8, a);
+	Core::Utility::saveAll(p.get());
+
+	std::vector<uint8_t> tests = Core::Utility::load("Data/pidor.hsbrdg");
+	ObjectModel::Primitive pp = ObjectModel::Primitive::unpack(tests);
+
+#endif
+
 #endif
 
 

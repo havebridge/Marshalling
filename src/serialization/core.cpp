@@ -11,6 +11,13 @@ namespace Core
 			return (result.back() == '1') ? true : false;
 		}
 
+		std::vector<uint8_t> load(const char* path)
+		{
+			std::ifstream in(path, std::ios::binary);
+			std::vector<uint8_t> result((std::istreambuf_iterator<char>(in)), (std::istreambuf_iterator<char>()));
+			return result;
+		}
+
 		void SaveInFile(const std::vector<uint8_t>& buffer, const char* path)
 		{
 			std::ofstream file;

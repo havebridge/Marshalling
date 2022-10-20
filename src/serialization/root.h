@@ -8,7 +8,7 @@ namespace ObjectModel
 	{
 	protected:
 		std::string name;
-		uint8_t nameLenght;
+		uint8_t nameLength;
 		uint32_t size;
 	public:
 		uint8_t wrapper;
@@ -17,20 +17,19 @@ namespace ObjectModel
 			:
 			name("unknown"),
 			wrapper(0),
-			nameLenght(0),
-			size(sizeof wrapper + sizeof nameLenght + sizeof size) {}
+			nameLength(0),
+			size(sizeof wrapper + sizeof nameLength + sizeof size) {}
 	public:
 		void setName(std::string name)
 		{
 			this->name = name;
-			nameLenght += static_cast<uint8_t>(name.size());
-			size += nameLenght;
+			nameLength += static_cast<uint8_t>(name.size());
+			size += nameLength;
 		}
 
 		uint32_t getSize() const { return size; }
 		std::string getName() const { return name; }
 
 		virtual void pack(std::vector<uint8_t>&, uint16_t&) = 0;
-
 	};
 }

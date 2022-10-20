@@ -31,5 +31,6 @@ namespace ObjectModel
 
 
 		virtual void pack(std::vector<uint8_t>&, uint16_t&) override;
+		static Primitive unpack(const std::vector<uint8_t>&);
 	};
 }
