@@ -39,16 +39,14 @@ int main(int argc, char** argv)
 #endif
 
 #if TEST_DESERIALIZE
-	uint8_t a = 25;
-	std::unique_ptr<ObjectModel::Primitive> p = ObjectModel::Primitive::createPrimitive("pidor", ObjectModel::Type::U8, a);
-	Core::Utility::saveAll(p.get());
-
-	std::vector<uint8_t> tests = Core::Utility::load("Data/pidor.hsbrdg");
-	ObjectModel::Primitive pp = ObjectModel::Primitive::unpack(tests);
-
+	TestFrame::testPrimitive();
+	TestFrame::testString();
+	TestFrame::testObject();
 #endif
 
 #endif
+
+
 
 
 #if RELEASE
