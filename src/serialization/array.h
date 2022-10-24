@@ -53,5 +53,7 @@ namespace ObjectModel
 		}
 
 		virtual void pack(std::vector<uint8_t>&, uint16_t&) override;
+		static Array unpackStr(const std::vector<uint8_t>&, uint16_t&);
+		static Array unpackArr(const std::vector<uint8_t>&, uint16_t&);
 	};
 }

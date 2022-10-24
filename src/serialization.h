@@ -2,10 +2,11 @@
 
 #include "hashtable/test/test.h"
 #include "serialization/test/testPrimitive.h"
-//#include "serialization/test/testArray.h"
 #include "serialization/test/testString.h"
 #include "serialization/test/testObject.h"
-#include "serialization/test/testSerialize.h"
+#include "serialization/test/testObject.h"
+#include "serialization/test/HashtableSerialize.h"
+
 
 #include "serialization/core.h"
 

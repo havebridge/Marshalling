@@ -17,10 +17,9 @@ namespace ObjectModel
 		Core::encode<uint32_t>(buffer, iterator, size);
 	}
 
-	Primitive Primitive::unpack(const std::vector<uint8_t>& buffer)
+	Primitive Primitive::unpack(const std::vector<uint8_t>& buffer, uint16_t& iterator)
 	{
 		Primitive p;
-		uint16_t iterator = 0;
 
 		p.nameLength = Core::decode<uint8_t>(buffer, iterator);
 		p.name = Core::decode<std::string>(buffer, iterator);

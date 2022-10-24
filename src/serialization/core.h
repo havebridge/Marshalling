@@ -101,7 +101,7 @@ namespace Core
 
 
 	template<typename T>
-	void decode(const std::vector<uint8_t>& buffer, uint16_t& iterator, std::vector<T> value)
+	void decode(const std::vector<uint8_t>& buffer, uint16_t& iterator, std::vector<T>& value)
 	{
 		for (int i = 0; i != value.size(); ++i)
 		{
