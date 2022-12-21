@@ -1,10 +1,11 @@
 #pragma once
 
 #include "core.h"
+#include "lib.h"
 
 namespace ObjectModel
 {
-	class Root
+	class LIB Root
 	{
 	protected:
 		std::string name;
