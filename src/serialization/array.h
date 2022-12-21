@@ -4,7 +4,7 @@
 
 namespace ObjectModel
 {
-	class Array : public Root
+	class LIB Array : public Root
 	{
 	private:
 		uint32_t count = 0;
