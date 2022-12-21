@@ -17,10 +17,10 @@ namespace Core
 {
 	namespace Utility
 	{
-		bool isLittleEndian();
+		bool LIB isLittleEndian();
 		void SaveInFile(const std::vector<uint8_t>&, const char*);
-		std::vector<uint8_t> load(const char* path);
-		void saveAll(ObjectModel::Root*);
+		std::vector<uint8_t> LIB load(const char* path);
+		void LIB saveAll(ObjectModel::Root*);
 	}
 
 
