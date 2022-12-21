@@ -4,7 +4,7 @@
 
 namespace ObjectModel
 {
-	class Primitive : public Root
+	class LIB Primitive : public Root
 	{
 	private:
 		uint8_t type = 0;
