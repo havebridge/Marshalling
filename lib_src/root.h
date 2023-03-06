@@ -19,7 +19,7 @@ namespace ObjectModel
 			name("unknown"),
 			wrapper(0),
 			nameLength(0),
-			size(sizeof wrapper + sizeof nameLength + sizeof size) {}
+			size(sizeof(wrapper) + sizeof(nameLength) + sizeof(size)) {}
 	public:
 		void setName(std::string name)
 		{

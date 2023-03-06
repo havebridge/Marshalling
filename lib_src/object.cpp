@@ -7,7 +7,7 @@ namespace ObjectModel
 	{
 		setName(name);
 		wrapper = static_cast<uint8_t>(Wrapper::OBJECT);
-		size += (sizeof uint16_t) * 4;
+		size += (sizeof(uint16_t)) * 4;
 	}
 
 	void Object::addEntitie(Root* entity)

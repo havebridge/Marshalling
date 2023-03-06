@@ -19,7 +19,7 @@ namespace ObjectModel
 			p->setName(name);
 			p->wrapper = static_cast<uint8_t>(Wrapper::PRIMITIVE);
 			p->type = static_cast<uint8_t>(type);
-			p->data = new std::vector<uint8_t>(sizeof value);
+			p->data = new std::vector<uint8_t>(sizeof(value));
 
 			p->size += static_cast<uint32_t>(p->data->size());
 

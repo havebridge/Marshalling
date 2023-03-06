@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 
+#include <memory>
+
 #include <string>
 #include <vector>
 
@@ -28,7 +30,7 @@ namespace Core
 	template<typename T>
 	void encode(std::vector<uint8_t>& buffer, uint16_t& iterator, T value)
 	{
-		for (int i = (sizeof T * 8) - 8; i >= 0; i -= 8)
+		for (int i = (sizeof(T) * 8) - 8; i >= 0; i -= 8)
 		{
 			buffer[iterator++] = value >> i;
 		}
@@ -76,9 +78,9 @@ namespace Core
 	{
 		T temp = 0, result = 0;
 		
-		for (int i = 0; i != sizeof T; ++i)
+		for (int i = 0; i != sizeof(T); ++i)
 		{
-			temp = buffer[iterator++] << (((sizeof T * 8) - 8) - (i * 8));
+			temp = buffer[iterator++] << (((sizeof(T) * 8) - 8) - (i * 8));
 			result |= temp;
 		}
 
